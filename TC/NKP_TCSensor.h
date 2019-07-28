@@ -5,13 +5,15 @@ int * _max_sensor_values = nullptr;
 int _lastPosition = 0;
 void setSensorPins(const int * _pins, int _NumofSensor_)
 {
-  _NumofSensor = _NumofSensor_;
+  _NumofSensor = (int)_NumofSensor_;
   _sensorPins = (int *)realloc(_sensorPins, sizeof(int) * _NumofSensor_);
   _min_sensor_values = (int *)realloc(_min_sensor_values, sizeof(int) * _NumofSensor_);
   _max_sensor_values = (int *)realloc(_max_sensor_values, sizeof(int) * _NumofSensor_);
   for (uint8_t i = 0; i < _NumofSensor_; i++)
   {
     _sensorPins[i] = _pins[i];
+    _min_sensor_values[i] = 1023;
+    _max_sensor_values[i] =  0; 
   }
   
 }
@@ -73,8 +75,8 @@ int readline()
   if (!onLine)
   {
     if (_lastPosition < (_NumofSensor - 1) * 1000 / 2)
-    {
-      return 0;
+   {
+     return 0;
     }
     else 
     {
