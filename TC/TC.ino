@@ -17,10 +17,10 @@ float integral ;
 float derivative ;
 float previous_error ;
 void setup() {
-  OK();
+  OK();  
   Serial.begin(115200);
   setSensorPins((const int[]) {
-    25, 26, 27 , 28
+    25, 26, 30 , 28
   }, 4);
   /*setSensorMax((const int[]) {1, 2, 3, 4});
   setSensorMin((const int[]) {5, 6, 7, 8});*/
@@ -48,8 +48,120 @@ void setup() {
   }
   beep();
   sw_ok_press();
+  /*pid_T(0.85,6.5,61,1500); 
+  for(int i=0;i<6;i++) pid_BB(0.85, 6.5,70);
+  left(); pid_BB(0.85, 6.5,70); left();
+  for(int i=0;i<5;i++) pid_BB(0.85, 6.5,70);
+  right(); pid_BB(0.85, 6.5,70); right();
+  for(int i=0;i<5;i++) pid_BB(0.85, 6.5,70);
+  left(); pid_BB(0.85, 6.5,70); left();
+  for(int i=0;i<5;i++) pid_BB(0.85, 6.5,70);
+  right(); pid_BB(0.85, 6.5,70); right();
+  for(int i=0;i<5;i++) pid_BB(0.85, 6.5,70);
+  left(); pid_BB(0.85, 6.5,70); left();
+  for(int i=0;i<5;i++) pid_BB(0.85, 6.5,70);
+ 
+  //////////
+    pid_T(0.85,6.5,60,500);
+  pid_T(0.85,6.5,70,2500); pid_BB(0.85, 6.5,60);
+   for(int i=0;i<6;i++) pid_BB(0.85, 6.5,60);
+  left(); pid_BB(0.85, 6.5,60); left();
+  for(int i=0;i<5;i++) pid_BB(0.85, 6.5,60);
+  right(); pid_BB(0.85, 6.5,60); right();
+  for(int i=0;i<5;i++) pid_BB(0.85, 6.5,60);
+  left(); pid_BB(0.85, 6.5,60); left();
+  for(int i=0;i<5;i++) pid_BB(0.85, 6.5,60);
+  right(); pid_BB(0.85, 6.5,60); right();
+  for(int i=0;i<5;i++) pid_BB(0.85, 6.5,60);
+  left(); pid_BB(0.85, 6.5,60); left();
+  for(int i=0;i<5;i++) pid_BB(0.85, 6.5,60);
+   pid_T(0.85,6.5,60,1500); 
+   sapan(0.85,6.5,55);
+  pid_T(0.85,6.5,40,1000); 
+  pid_BB(0.85, 6.5,60);
+  sr(50); delay(100); ao();  sr(50);
+  while(analog(6)>500); ao();
+  pid_T(0.9,8,55,9000);*/
+
+
   
-  pid_T(0.85,6.5,61,10000); 
+  /*pid_T(0.85,6.5,61,1500); 
+  for(int i=0;i<6;i++) pid_BB(0.85, 6.5,60);
+  left(); pid_BB(0.85, 6.5,60); left();
+  for(int i=0;i<5;i++) pid_BB(0.85, 6.5,60);
+  right(); pid_BB(0.85, 6.5,60); right();
+  for(int i=0;i<5;i++) pid_BB(0.85, 6.5,60);
+  left(); pid_BB(0.85, 6.5,60); left();
+  for(int i=0;i<5;i++) pid_BB(0.85, 6.5,60);
+  right(); pid_BB(0.85, 6.5,60); right();
+  for(int i=0;i<5;i++) pid_BB(0.85, 6.5,60);
+  left(); pid_BB(0.85, 6.5,60); left();
+  for(int i=0;i<5;i++) pid_BB(0.85, 6.5,60);
+ 
+  //////////
+    pid_T(0.85,6.5,60,500);
+  pid_T(0.85,6.5,70,2500); pid_BB(0.85, 6.5,60);
+   for(int i=0;i<6;i++) pid_BB(0.85, 6.5,60);
+  left(); pid_BB(0.85, 6.5,60); left();
+  for(int i=0;i<5;i++) pid_BB(0.85, 6.5,60);
+  right(); pid_BB(0.85, 6.5,60); right();
+  for(int i=0;i<5;i++) pid_BB(0.85, 6.5,60);
+  left(); pid_BB(0.85, 6.5,60); left();
+  for(int i=0;i<5;i++) pid_BB(0.85, 6.5,60);
+  right(); pid_BB(0.85, 6.5,60); right();
+  for(int i=0;i<5;i++) pid_BB(0.85, 6.5,60);
+  left(); pid_BB(0.85, 6.5,60); left();
+  for(int i=0;i<5;i++) pid_BB(0.85, 6.5,60);
+   pid_T(0.85,6.5,60,1500); 
+   sapan(0.85,6.5,55);
+  pid_T(0.85,6.5,40,1000); 
+  pid_BB(0.85, 6.5,60);
+  sr(50); delay(100); ao();  sr(50);
+  while(analog(6)>500); ao();
+  pid_T(0.9,8,55,9000);*/
+  
+  
+  ///////////////////////////////////////////////////////////////////////////////////////
+  ////top ten
+  //pid_T(0.9,6.5,75,2500);
+  
+  pid_T(0.9,8,55,7100);  //here 161
+  pid_BB(0.85, 6.5,50);
+  sl(40); delay(100); ao();  sl(40);
+  while(analog(2)>500); ao();
+  pid_T(0.85,6.5,75,800); 
+  sapanleft(0.85,6.5,55); //reverse
+  pid_T(0.85,6.5,40,500); 
+  pid_T(0.85,6.75,60,2100); //6.5
+ 
+  for(int i=0;i<6;i++) pid_BB(0.85, 6.5,65);
+  pid_T(0.9,6.5,50,400); 
+  pid_BB(0.85, 6.5,50);
+  for(int i=0;i<5;i++) pid_BB(0.85, 6.5,65);
+   left(); pid_BB(0.85, 6.5,60); left();
+   for(int i=0;i<5;i++) pid_BB(0.85, 6.5,70); pid_T(0.9,6.5,50,400); 
+   for(int i=0;i<6;i++) pid_BB(0.85, 6.5,65); 
+   left(); pid_BB(0.85, 6.5,60); left();
+   for(int i=0;i<5;i++) pid_BB(0.85, 6.5,70); pid_T(0.9,6.5,50,400);
+   for(int i=0;i<6;i++) pid_BB(0.85, 6.5,70);
+
+   pid_T(0.85,6.5,60,500);
+   pid_T(1.1,6.5,80,2200);
+   pid_BB(0.85,7,50);
+   for(int i=0;i<5;i++) pid_BB(0.85, 6.5,70);
+   right(); pid_BB(0.85, 6.5,60); right();
+   for(int i=0;i<5;i++) pid_BB(0.85, 6.5,70); pid_T(0.9,6.5,50,700); 
+   //pid_BB(0.85,7,50);
+   for(int i=0;i<5;i++) pid_BB(0.85, 6.5,70);
+   right(); pid_BB(0.85, 6.5,60); right();
+   for(int i=0;i<5;i++) pid_BB(0.85, 6.5,70); pid_T(0.9,6.5,50,700); 
+   for(int i=0;i<5;i++) pid_BB(0.85, 6.5,65);
+   right(); pid_BB(0.85, 6.5,60); right();
+   for(int i=0;i<5;i++) pid_BB(0.85, 6.5,65);//here
+   //pid_T(0.85,6.5,65,5000); 
+   pid_T(1.1,6.75,75,2500);///////////here
+  //real code 33.38
+ /* pid_T(0.85,6.5,61,10000); 
   pid_T(0.9,6.5,70,1500); 
   pid_T(0.85,6.5,61,10000); 
   sapan(0.85,6.5,55);
@@ -57,7 +169,7 @@ void setup() {
   pid_BB(0.85, 6.5,60);
   sr(50); delay(100); ao();  sr(50);
   while(analog(3)>500); ao();
-  pid_T(0.9,8,50,9000);
+  pid_T(0.9,8,50,9000);*/
   
   // real code 33.60
   /*pid_T(0.85,6.5,61,23000); 
@@ -112,6 +224,18 @@ void loop() {
   ao();
 }
 
+void left(){
+  sl(40); delay(100); ao();  sl(40);
+  while(analog(2)>500); ao();
+  ao(); delay(20);
+
+}
+void right(){
+  sr(40); delay(100); ao();  sr(40);
+  while(analog(6)>500); ao();
+  ao(); delay(20);
+
+}
 void pid(float Kp , float Kd , int speed_max)
 {
   present_position = readline() / ((numSensor - 1) * 10) ;
@@ -209,20 +333,30 @@ void square(int num)
     }
   }
 }
+void sapanleft(float Kp , float Kd , int speed_max)
+{
+  while (analog(5) > 300 && analog(0) > 300)pid(Kp, Kd, speed_max);
+  while (analog(5) < 300 || analog(0) < 300)pid(Kp, Kd, speed_max);
+  ao(); sl(40); delay(200); ao();
+  //pid_T( Kp ,Kd ,speed_max,100);
+  sl(40); while (analog(2) > 500); ao();
+  //sr(40); while (analog(3) < 500); ao();
+  //pid_T(Kp,Kd,speed_max,100);
+}
 void sapan(float Kp , float Kd , int speed_max)
 {
   while (analog(5) > 300 && analog(0) > 300)pid(Kp, Kd, speed_max);
   while (analog(5) < 300 || analog(0) < 300)pid(Kp, Kd, speed_max);
   ao(); sr(40); delay(200); ao();
   //pid_T( Kp ,Kd ,speed_max,100);
-  sr(40); while (analog(3) > 500); ao();
+  sr(40); while (analog(6) > 500); ao();
   //sr(40); while (analog(3) < 500); ao();
   //pid_T(Kp,Kd,speed_max,100);
 }
 void pid_BB(float Kp , float Kd , int speed_max)
 {
-  while (analog(5) > 300 && analog(0) > 300)pid(Kp, Kd, speed_max);
-  while (analog(5) < 300 || analog(0) < 300)pid(Kp, Kd, speed_max);
+  while (analog(5) > 500 && analog(0) > 500)pid(Kp, Kd, speed_max);
+  while (analog(5) < 500 || analog(0) < 500)pid(Kp, Kd, speed_max);
   ao();
   //pid_T(Kp,Kd,speed_max,100);
 }
