@@ -2,7 +2,7 @@
 #define Ki 0
 #include "NKP_TCSensor.h"
 
-uint8_t numSensor = 6;
+uint8_t numSensor = 4;
 int a = 0;
 // การปรับ PID นั้น เริ่มจากการปรับที่ KP ก่อน แล้วให้ KI KD ตัวอื่น ๆให้เป็น 0 ให้หมด
 // เมื่อหุ่นยนต์ของเรา วิ่งกลับมาจุดกลึงกลางแล้วก็ปรับ KD เพิ่มมากชึ้นทำให้การสวิงนั้นต่ำลง
@@ -21,11 +21,11 @@ void setup() {
   OK();
   Serial.begin(115200);
   setSensorPins((const int[]) {
-    24, 25, 26, 30 , 28, 29
-  }, 6);
+     25, 26, 30 , 28
+  }, 4);
   /*setSensorMax((const int[]) {1, 2, 3, 4});
     setSensorMin((const int[]) {5, 6, 7, 8});*/
-  for (int i = 0; i < 5000; i++) {
+ /* for (int i = 0; i < 5000; i++) {
     setCalibrate();
   }
   for (uint8_t i = 0; i < 4; i++)
@@ -40,14 +40,18 @@ void setup() {
     Serial.print(' ');
   }
   Serial.println();
-  delay(1000);
+  delay(1000);*/
+  _min_sensor_values[0] = 146, _max_sensor_values[0] = 982;
+  _min_sensor_values[1] = 133, _max_sensor_values[1] = 981;
+  _min_sensor_values[2] = 159, _max_sensor_values[2] = 986;
+  _min_sensor_values[3] = 79, _max_sensor_values[3] = 950;
   for (int i = 1; i <= 6; i++) {
     ref[i] = (_min_sensor_values[i - 1] + _min_sensor_values[i - 1]) / 2;
   }
   beep();
   int x = 0;
   while (1) {
-    glcd(1, 0, " %d ", x % 4);
+    glcd(1, 0, " %d ", x % 8);
     if (sw1()) {
       x++;
     }
@@ -55,14 +59,155 @@ void setup() {
     delay(100);
   }
   beep(); delay(1000);
-  if (x % 4 == 0) {
-    pid_T(1.25, 6.5, 70, 2500); //save
-    pid_T2(1.25, 6.5, 70, 2000);
-    pid_T(1.3, 6.75, 70, 100);
-    pid_T(1.3, 6.75, 60, 8000);
-    esc();
-
+ /*if (x % 8 == 0) {
+     pid_BB(1.225 ,6.5 ,80);
+    pid_BL(1.225 ,6.5,  70); left();
+    pid_BB(1.225 ,6.5 ,70); 
+    //ao(); delay(20);
+    pid_T(1.225 ,6.5 ,80,500);
+    pid_BB(1.25  ,6.6,70);
+    pid_BR(1.225 ,6.5,  60); right();
+    // ao(); delay(20);
+    pid_BB(1.25 ,6.6 ,70);
+    pid_T(1.25 ,6.6 ,80,2000);
+    pid_T(1.21 ,6.6 ,90,8000);
+    pid_BB(1.21 ,6.5 ,90);
+    
   }
+  else if (x%8==1){
+    pid_BB(1.21 ,6.5 ,80);
+    pid_BL(1.21 ,6.5,  70); left();
+    pid_BB(1.21 ,6.5 ,70); 
+    //ao(); delay(20);
+    pid_T(1.21 ,6.5 ,80,500);
+    pid_BB(1.25  ,6.6,70);
+    pid_BR(1.21 ,6.5,  60); right();
+    // ao(); delay(20);
+    pid_BB(1.25 ,6.6 ,70);
+    pid_T(1.25 ,6.6 ,80,2000);
+    pid_T(1.21 ,6.5 ,90,8000);
+    pid_BB(1.21 ,6.5 ,90);
+   
+  }
+  else if (x%8==2){
+    pid_BB(1.21 ,6.5 ,80);
+    pid_BL(1.21 ,6.5,  70); left();
+    pid_BB(1.21 ,6.5 ,70); 
+    //ao(); delay(20);
+    pid_T(1.21 ,6.5 ,80,500);
+    pid_BB(1.25  ,6.6,70);
+    pid_BR(1.21 ,6.5,  60); right();
+    // ao(); delay(20);
+    pid_BB(1.25 ,6.6 ,70);
+    pid_T(1.25 ,6.6 ,80,2000);
+    pid_T(1.21 ,6.5 ,95,8000);
+    pid_BB(1.21 ,6.5 ,95);
+  }*/
+   if (x%8==0){
+    pid_BB(1.225 ,6.5 ,80);
+    pid_BL(1.225 ,6.5,  70); left();
+    pid_BB(1.225 ,6.5 ,70); 
+    pid_BB(1.225 ,6.5 ,80); 
+    pid_BR(1.225 ,6.5,  60); right();
+    pid_BB(1.225 ,6.5 ,70); 
+    pid_BR(1.225 ,6.5,  60);
+    pid_T(1.225 ,6.5 ,50,200); 
+    sr(50); delay (100);
+    ao(); 
+    while(1)
+    {
+      if (analog(1) > 700 || analog(2) > 700 || analog(6) > 700 || analog(4)>700) break;
+      fd(50);
+    } 
+    pid_T(1.225 ,6.5 ,70,1000); 
+    pid_T(1.21 ,6.5 ,90,100000); 
+  }
+  else if (x%8==1){
+    pid_BB(1.21 ,6.5 ,90);
+    pid_BL(1.21 ,6.5,  70); left();
+    pid_BB(1.21 ,6.5 ,70); 
+    pid_BB(1.21 ,6.5 ,90); 
+    pid_BR(1.21 ,6.5,  70); right();
+    pid_BB(1.21 ,6.5 ,80); 
+    pid_BR(1.21 ,6.5,  80);
+    pid_T(1.21 ,6.5 ,50,200); 
+    sr(50); delay (100);
+    ao(); 
+    while(1)
+    {
+      if (analog(1) > 700 || analog(2) > 700 || analog(6) > 700 || analog(4)>700) break;
+      fd(50);
+    } 
+    pid_T(1.21 ,6.5 ,70,1000); 
+    pid_T(1.21 ,6.5 ,90,100000); 
+  }
+   else if (x%8==2){
+   pid_BB(1.21 ,6.5 ,90);
+    pid_BL(1.21 ,6.5,  70); left();
+    pid_BB(1.21 ,6.5 ,70); 
+    pid_BB(1.21 ,6.5 ,90); 
+    pid_BR(1.21 ,6.5,  70); right();
+    pid_BB(1.21 ,6.5 ,80); 
+    pid_BR(1.21 ,6.5,  80);
+    pid_T(1.21 ,6.5 ,50,200); 
+    sr(50); delay (100);
+    ao(); 
+    while(1)
+    {
+      if (analog(1) > 700 || analog(2) > 700 || analog(6) > 700 || analog(4)>700) break;
+      fd(50);
+    } 
+    pid_T(1.21 ,6.5 ,70,1000); 
+    pid_T(1.21 ,6.5 ,91,100000);
+  }
+    else if (x%8==3){
+     pid_BB(1.225 ,6.5 ,80);
+    pid_BL(1.225 ,6.5,  70); left();
+    pid_BB(1.225 ,6.5 ,70); 
+    pid_BB(1.225 ,6.5 ,80); 
+    pid_BR(1.225 ,6.5,  60); right();
+    pid_BB(1.225 ,6.5 ,70); 
+    pid_BR(1.225 ,6.5,  60);
+    pid_T(1.225 ,6.5 ,50,200); 
+    sr(50); delay (100);
+    ao(); 
+    while(1)
+    {
+      if (analog(1) > 700 || analog(2) > 700 || analog(6) > 700 || analog(4)>700) break;
+      fd(50);
+    } 
+    pid_T(1.225 ,6.5 ,70,1000); 
+    pid_T(1.21 ,6.5 ,85,100000); 
+    }
+    else if (x%8==4){
+    pid_BB(1.225 ,6.5 ,80);
+    pid_BL(1.225 ,6.5,  70); left();
+    pid_BB(1.225 ,6.5 ,70); 
+    pid_BB(1.225 ,6.5 ,80); 
+    pid_BR(1.225 ,6.5,  60); right();
+    pid_BB(1.225 ,6.5 ,70); 
+    pid_BR(1.225 ,6.5,  60);
+    pid_T(1.225 ,6.5 ,50,200); 
+    sr(50); delay (100);
+    ao(); 
+    while(1)
+    {
+      if (analog(1) > 700 || analog(2) > 700 || analog(6) > 700 || analog(4)>700) break;
+      fd(50);
+    } 
+    pid_T(1.225 ,6.5 ,70,1000); 
+    pid_T(1.21 ,6.5 ,80,100000); 
+    }
+    else if (x%8==7){
+      while(1){
+      //glcd(0, 0, "%d   ", analog(0));
+     glcd(1, 0, "%d   ", analog(1));
+     glcd(2, 0, "%d   ", analog(2));
+     glcd(3, 0, "%d   ", analog(6));
+     glcd(4, 0, "%d   ", analog(4));
+     //glcd(5, 0, "%d   ", analog(5));
+      }
+      }
   //pid_T(1.3,7.5,90,40000);
   //sw_ok_press();
 
@@ -239,18 +384,25 @@ void loop() {
     {
     glcd(i, 0, "%d   ", analog(i));
     }//*/
+    /* glcd(0, 0, "%d   ", analog(0));
+     glcd(1, 0, "%d   ", analog(1));
+     glcd(2, 0, "%d   ", analog(2));
+     glcd(3, 0, "%d   ", analog(6));
+     glcd(4, 0, "%d   ", analog(4));
+     glcd(5, 0, "%d   ", analog(5));*/
   ao();
 }
 
 void left() {
+ // fd(50); delay(50);
   sl(40); delay(100); ao();  sl(40);
-  while (analog(2) > 500); ao();
+  while (analog(2) < 500); ao();
   ao(); delay(20);
 
 }
 void right() {
   sr(40); delay(100); ao();  sr(40);
-  while (analog(6) > 500); ao();
+  while (analog(6) < 500); ao();
   ao(); delay(20);
 
 }
@@ -397,8 +549,8 @@ void sapan(float Kp , float Kd , int speed_max)
 }
 void pid_BB(float Kp , float Kd , int speed_max)
 {
-  while (analog(5) > 500 && analog(0) > 500)pid(Kp, Kd, speed_max);
-  while (analog(5) < 500 || analog(0) < 500)pid(Kp, Kd, speed_max);
+  while (analog(5) < 500 && analog(0) < 500)pid(Kp, Kd, speed_max);
+  while (analog(5) > 500 || analog(0) > 500)pid(Kp, Kd, speed_max);
   ao();
   //pid_T(Kp,Kd,speed_max,100);
 }
@@ -464,4 +616,19 @@ void esc() {
   ao();
   pid_T(1.3, 6.75, 70, 10000);
   //pid_T(0.85,6.5,60,200);
+}
+
+
+void pid_BL(float Kp , float Kd , int speed_max)
+{
+  while (analog(0)  <500  ||  analog(5) >  500) pid(Kp, Kd, speed_max);
+  ao();
+  //pid_T(Kp,Kd,speed_max,100);
+}
+
+void pid_BR(float Kp , float Kd , int speed_max)
+{
+  while (analog(5)  <500  ||  analog(0) >  500) pid(Kp, Kd, speed_max);
+  ao();
+  //pid_T(Kp,Kd,speed_max,100);
 }
